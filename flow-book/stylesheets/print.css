@@ -1,0 +1,170 @@
+@prince-pdf {
+    prince-pdf-profile: "PDF/X-3:2003"
+}
+
+@page {
+  size: 13.017cm 20.955cm;
+  prince-trim: 0.317cm 0.634cm;
+  prince-bleed: 0.317cm;
+}
+
+@page :first {
+    size: 26.176cm 20.955cm;
+	margin-left: 10cm;
+    background-color:black;
+    color:white;
+    @bottom {
+        display:none;
+    }
+}
+
+@page :left {
+    margin: 0.634cm;
+	@bottom-left { 
+	    font-family:"helvetica neue", sans-serif;
+	    font-size:10pt;
+	    color:gray;
+		content: counter(page, decimal-leading-zero);
+	}
+}
+
+@page :right {
+    margin: 0.634cm;
+    @bottom-right {
+        color:gray;
+	    font-family:"helvetica neue", sans-serif;
+	    font-size:10pt;
+        content: string(Chapter) " " counter(page, decimal-leading-zero);
+        z-index:1;
+    }
+}
+
+
+body {
+	font-family:"helvetica neue", sans-serif;
+	font-size:11pt;
+}
+
+body > h1 {
+	string-set: Booktitle content();
+	color:white;
+	text-transform:uppercase;
+	font-size:75pt;
+	margin-left:3cm;
+	margin-top:5cm;
+	background-color:black;
+}
+
+
+body > h1 + p {
+    color:white;
+    margin-left:3cm;
+}
+
+body > h1 + p + p {
+    position:absolute;
+    color:white;
+    font-size:10pt;
+    bottom:1cm;
+    right:1cm;
+}
+
+h2 {
+    font-weight:thin;
+    page-break-before: always;
+	string-set: Chapter content();
+	prince-bookmark-level: 1; 
+	prince-bookmark-state: closed;
+}
+
+h3 {
+    font-weight:thin;
+}
+
+a {
+	text-decoration:none;
+	font-style:italic;
+	color:inherit;
+}
+
+code {
+    white-space: pre;
+}
+
+#pages h1 {
+    background: black;
+    text-transform:uppercase;
+    color:white;
+    margin-top:4cm;
+    width:100%;
+    page-break-before: left;
+    padding-left:5mm;
+}
+
+#pages {
+    counter-reset: h2;
+}
+
+#pages h1 {
+    color:white;
+    font-size:50pt;
+}
+
+#pages h2:before  {
+	counter-increment: h2;
+	content: counter(h2) " ";
+}
+
+#pages article {
+    height:100%;
+}
+
+#pages p {
+    color:#555;
+    line-height:1.5;
+    text-align:justify;
+    word-spacing: -0.4mm;
+}
+
+#pages ul {
+    color:#555;
+}
+
+#pages h2,
+#pages h3,
+#pages h2 + p {
+    color:#222;
+}
+
+
+
+
+#toc ul {
+    list-style:none;
+}
+
+#toc ul h3 {
+    font-size:100%;
+}
+
+#toc span {
+    color:gray;
+}
+
+
+#toc ul li li a:after { 
+	content: leader(dotted) " " target-counter(attr(href, url), page);
+}
+
+
+#pages a[href^="#"] {
+  	content: target-text(attr(href, url), content()) " (page " target-counter(attr(href, url), page) ")";
+}
+
+#pages pre {
+    border:thin solid #ddd;
+    padding:2mm;
+    font-family:"helvetica neue", sans-serif;
+    font-size:8pt;
+    color:gray;
+}
